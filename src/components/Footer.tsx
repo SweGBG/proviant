@@ -8,7 +8,8 @@ export default function Footer() {
     <footer className="footer">
       <div className="wrap">
         <div className="brand">
-          Proviant <small>Le Bon Vivant</small>
+          <span className="brand-name">Proviant</span>
+          <small>Le Bon Vivant</small>
         </div>
         <p className="footer-tagline">{t.footer.tagline}</p>
         <p className="footer-small">

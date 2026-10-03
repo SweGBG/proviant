@@ -17,21 +17,14 @@ export default function Newsletter() {
   };
 
   return (
-    <section id="nyhetsbrev">
+    <section id="nyhetsbrev" className="newsletter" data-anim>
       <div className="wrap">
         <Reveal className="newsletter-inner">
           <div className="ornament" aria-hidden="true">
-            ◆
+            <i />◆<i />
           </div>
-          <h2
-            className="display"
-            style={{ fontSize: "clamp(1.8rem, 3.6vw, 2.5rem)", margin: "1.2rem 0 0.8rem" }}
-          >
-            {t.newsletter.title}
-          </h2>
-          <p style={{ color: "rgba(53,32,31,0.75)", lineHeight: 1.7 }}>
-            {t.newsletter.sub}
-          </p>
+          <h2 className="display mat">{t.newsletter.title}</h2>
+          <p className="newsletter-sub">{t.newsletter.sub}</p>
           {done ? (
             <p className="newsletter-done">{t.newsletter.done}</p>
           ) : (
@@ -45,7 +38,7 @@ export default function Newsletter() {
                 aria-label={t.newsletter.placeholder}
               />
               <button type="submit" className="btn btn-primary">
-                {t.newsletter.button}
+                <span>{t.newsletter.button}</span>
               </button>
             </form>
           )}

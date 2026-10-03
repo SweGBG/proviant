@@ -61,7 +61,8 @@ export default function Header() {
       <header className={`header ${scrolled ? "scrolled" : ""}`}>
         <div className="wrap header-inner">
           <a href="#top" className="brand" aria-label="Proviant — till toppen">
-            Proviant <small>Le Bon Vivant</small>
+            <span className="brand-name">Proviant</span>
+            <small>Le Bon Vivant</small>
           </a>
 
           <nav className="nav-desktop" aria-label="Huvudmeny">
@@ -72,7 +73,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
+          <div className="header-tools">
             <div className="lang-switch" role="group" aria-label="Språk / Language">
               <button
                 className={`lang-btn ${lang === "se" ? "active" : ""}`}
@@ -105,8 +106,8 @@ export default function Header() {
       </header>
 
       <nav className={`mobileMenu ${open ? "open" : ""}`} aria-label="Mobilmeny">
-        {links.map(([href, label]) => (
-          <a key={href} href={href} onClick={() => setOpen(false)}>
+        {links.map(([href, label], i) => (
+          <a key={href} href={href} onClick={() => setOpen(false)} style={{ ["--i" as string]: i }}>
             {label}
           </a>
         ))}

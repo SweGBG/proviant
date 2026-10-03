@@ -2,6 +2,7 @@
 
 import { useLang } from "@/lib/i18n";
 import Reveal from "./Reveal";
+import Helix from "./Helix";
 
 const icons = [
   // Chark — salamiskivor
@@ -47,19 +48,48 @@ const icons = [
   </svg>,
 ];
 
-export default function Categories() {
-  const { t } = useLang();
+/* Gilded baroque corner, rotated for each corner of the frame */
+function Flourish({ className }: { className: string }) {
   return (
-    <section id="sortiment">
+    <svg className={`flourish ${className}`} viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M2 38V14C2 7 7 2 14 2h24" />
+      <path d="M7 38V17c0-6 4-10 10-10h21" />
+      <path d="M2 14c6 0 9 3 9 9M14 2c0 6 3 9 9 9" />
+      <circle cx="11" cy="11" r="2.2" />
+    </svg>
+  );
+}
+
+export default function Dna() {
+  const { t } = useLang();
+  const names = t.categories.items.map((c) => c.title);
+  return (
+    <section id="sortiment" className="dna" data-anim>
       <div className="wrap">
         <Reveal className="section-head">
+          <span className="eyebrow">{t.dna.eyebrow}</span>
+          <h2 className="display mat">{t.dna.title}</h2>
+          <p>{t.dna.sub}</p>
+        </Reveal>
+      </div>
+
+      <div className="dna-band">
+        <Helix className="dna-helix" count={36} speed={9} labels={names} />
+      </div>
+
+      <div className="wrap">
+        <Reveal className="section-head small">
           <span className="eyebrow">{t.categories.eyebrow}</span>
-          <h2 className="display">{t.categories.title}</h2>
+          <h3 className="display">{t.categories.title}</h3>
           <p>{t.categories.sub}</p>
         </Reveal>
         <div className="cat-grid">
           {t.categories.items.map((item, i) => (
-            <Reveal key={item.title} delay={(i % 3) * 0.12} as="article" className="cat-card">
+            <Reveal key={i} delay={(i % 3) * 0.12} as="article" className="cat-card frame">
+              <Flourish className="tl" />
+              <Flourish className="tr" />
+              <Flourish className="br" />
+              <Flourish className="bl" />
               <div className="cat-icon">{icons[i]}</div>
               <h3>{item.title}</h3>
               <p>{item.text}</p>

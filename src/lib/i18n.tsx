@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
 export type Lang = "se" | "en";
 
@@ -19,8 +19,14 @@ const dict = {
         "Handplockade delikatesser från små producenter — lagrade ostar, lufttorkad chark, marmelader kokta i koppargryta och viner med själ.",
       cta1: "Se veckans disk",
       cta2: "Hitta hit",
+      scroll: "Scrolla",
     },
     ticker: ["Chark", "Ost", "Marmelad", "Nötter", "Vin", "God mat"],
+    dna: {
+      eyebrow: "Smakens DNA",
+      title: "Sex strängar, en smak",
+      sub: "Chark, ost, marmelad, nötter, vin och god mat. Flätade samman till det vi kallar le bon vivant.",
+    },
     categories: {
       eyebrow: "Sortimentet",
       title: "Sex hyllor, noll genvägar",
@@ -147,6 +153,9 @@ const dict = {
       phone: "08-12 34 56",
       mail: "hej@proviant.se",
       note: "Vi skivar, vakuumpackar och slår in — säg bara till.",
+      openNow: "Öppet nu",
+      closedNow: "Stängt just nu",
+      map: "Visa på karta",
     },
     newsletter: {
       title: "Nyheter från disken",
@@ -174,8 +183,14 @@ const dict = {
         "Hand-picked delicacies from small producers — aged cheeses, air-dried charcuterie, jams simmered in copper pots and wines with soul.",
       cta1: "See this week's counter",
       cta2: "Find us",
+      scroll: "Scroll",
     },
     ticker: ["Charcuterie", "Cheese", "Preserves", "Nuts", "Wine", "Good food"],
+    dna: {
+      eyebrow: "The DNA of taste",
+      title: "Six strands, one flavour",
+      sub: "Charcuterie, cheese, preserves, nuts, wine and good food. Braided together into what we call le bon vivant.",
+    },
     categories: {
       eyebrow: "The range",
       title: "Six shelves, zero shortcuts",
@@ -302,6 +317,9 @@ const dict = {
       phone: "+46 8 12 34 56",
       mail: "hej@proviant.se",
       note: "We slice, vacuum-pack and gift-wrap — just say the word.",
+      openNow: "Open now",
+      closedNow: "Closed right now",
+      map: "Show on map",
     },
     newsletter: {
       title: "News from the counter",
@@ -326,7 +344,23 @@ const LangContext = createContext<{
 }>({ lang: "se", setLang: () => {}, t: dict.se });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("se");
+  const [lang, setLangState] = useState<Lang>("se");
+  // remember the visitor's choice; keep <html lang> in sync
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("proviant-lang");
+      if (saved === "se" || saved === "en") setLangState(saved);
+    } catch {}
+  }, []);
+  useEffect(() => {
+    document.documentElement.lang = lang === "se" ? "sv" : "en";
+  }, [lang]);
+  const setLang = (l: Lang) => {
+    setLangState(l);
+    try {
+      localStorage.setItem("proviant-lang", l);
+    } catch {}
+  };
   return (
     <LangContext.Provider value={{ lang, setLang, t: dict[lang] as Dict }}>
       {children}

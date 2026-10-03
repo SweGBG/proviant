@@ -1,20 +1,15 @@
-import type { Metadata } from "next";
-import { Cormorant_Garamond, Jost } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import { LanguageProvider } from "@/lib/i18n";
+// Fonts, self-hosted: Cormorant Garamond (display) + Jost (body)
+import "@fontsource/cormorant-garamond/500.css";
+import "@fontsource/cormorant-garamond/600.css";
+import "@fontsource/cormorant-garamond/700.css";
+import "@fontsource/cormorant-garamond/500-italic.css";
+import "@fontsource/cormorant-garamond/600-italic.css";
+import "@fontsource/jost/300.css";
+import "@fontsource/jost/400.css";
+import "@fontsource/jost/500.css";
 import "./globals.css";
-
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-cormorant",
-});
-
-const jost = Jost({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-jost",
-});
 
 export const metadata: Metadata = {
   title: "Proviant — En butik för delikatesser",
@@ -22,18 +17,17 @@ export const metadata: Metadata = {
     "Delikatessbutik med handplockad chark, ost, marmelad, nötter och vin. Le bon vivant — konsten att leva gott.",
   openGraph: {
     title: "Proviant — En butik för delikatesser",
-    description:
-      "Handplockad chark, ost, marmelad, nötter och vin från små producenter.",
-    images: ["/logo.png"],
+    description: "Handplockad chark, ost, marmelad, nötter och vin från små producenter.",
+    images: [{ url: "/logo.webp", width: 1408, height: 768 }],
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export const viewport: Viewport = { themeColor: "#170a0d" };
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="sv">
-      <body className={`${cormorant.variable} ${jost.variable}`}>
+      <body>
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
